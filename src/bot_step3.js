@@ -40,9 +40,15 @@ const premiumRole = {
         const userId = mention.replace(/<@(.*?)>/, (match, group1) => group1);
         const member = guild.members.get(userId);
  
-        // TODO: Handle invalid command arguments, such as:
-        // 1. No mention or invalid mention.
-        // 2. No amount or invalid amount.
+        const userIsInGuild = !!member;
+        if (!userIsInGuild) {
+            return msg.channel.createMessage('User not found in this guild.');
+        }
+ 
+        const amountIsValid = amount && !Number.isNaN(amount);
+        if (!amountIsValid) {
+            return msg.channel.createMessage('Invalid donation amount');
+        }
  
         return Promise.all([
             msg.channel.createMessage(`${mention} paid $${amount.toFixed(2)}`),
