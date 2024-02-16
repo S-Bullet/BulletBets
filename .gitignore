@@ -39,4 +39,4 @@ package-lock.json
 /.idea/
 
 .env
-config.js
+config.json
